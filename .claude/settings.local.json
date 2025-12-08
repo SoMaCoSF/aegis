@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Recurse -Depth 2)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; Get-ChildItem -Directory | Select-Object -ExpandProperty Name\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; Get-ChildItem packages -Directory | Select-Object -ExpandProperty Name\")",
+      "Bash(powershell.exe -Command \"Test-Path ''D:\\somacosf\\aegis\\database\\data\\aegis.db''\")",
+      "Bash(powershell.exe -Command \"gh auth status\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git status 2>&1\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git init; git add .; git commit -m ''🎉 Initial AEGIS scaffold''\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git config user.email ''somacosf@users.noreply.github.com''; git config user.name ''SoMaCoSF''; git add .; git commit -m ''🎉 Initial AEGIS scaffold''\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

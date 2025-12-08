@@ -1,0 +1,33 @@
+{
+  "name": "aegis",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Account & Enterprise Guardian Intelligence System",
+  "workspaces": [
+    "packages/*",
+    "services/*",
+    "database"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "db:push": "cd database && npx prisma db push",
+    "db:studio": "cd database && npx prisma studio",
+    "db:generate": "cd database && npx prisma generate",
+    "browser:scan": "cd packages/browser-parser && npm run scan",
+    "github:audit": "cd packages/github-auditor && npm run audit"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.3.0",
+    "@types/node": "^20.0.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.0",
+    "rimraf": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

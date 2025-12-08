@@ -1,0 +1,128 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/aegis.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id               String         @id @default(uuid())
+  domain           String
+  url              String?
+  username         String?
+  email            String?
+  passwordStored   Boolean        @default(false)
+  passwordStrength String?
+  has2FA           Boolean        @default(false)
+  category         String
+  source           String
+  lastLogin        DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  metadata         String?
+  
+  subscriptions    Subscription[]
+  breaches         BreachExposure[]
+  
+  @@index([domain])
+  @@index([category])
+}
+
+model Subscription {
+  id                  String    @id @default(uuid())
+  accountId           String
+  name                String
+  cost                Float
+  currency            String    @default("USD")
+  billingCycle        String
+  nextBillingDate     DateTime?
+  cancellationUrl     String?
+  canPause            Boolean   @default(false)
+  status              String
+  paymentMethod       String?
+  notes               String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  
+  account             Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  
+  @@index([status])
+  @@index([nextBillingDate])
+}
+
+model PrivacyExposure {
+  id             String    @id @default(uuid())
+  brokerName     String
+  brokerUrl      String
+  dataFound      String
+  removalStatus  String
+  removalDate    DateTime?
+  source         String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  @@index([removalStatus])
+}
+
+model BreachExposure {
+  id           String   @id @default(uuid())
+  accountId    String
+  breachName   String
+  breachDate   DateTime
+  dataTypes    String
+  source       String
+  acknowledged Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  
+  account      Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  
+  @@index([accountId])
+}
+
+model EmailSubscription {
+  id              String    @id @default(uuid())
+  senderEmail     String
+  senderDomain    String
+  firstSeen       DateTime
+  lastSeen        DateTime
+  frequency       Float?
+  hasUnsubscribe  Boolean   @default(false)
+  unsubscribeUrl  String?
+  linkedAccountId String?
+  isSubscribed    Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([senderDomain])
+}
+
+model GitHubIntegration {
+  id          String    @id @default(uuid())
+  type        String
+  name        String
+  slug        String?
+  permissions String?
+  url         String?
+  repository  String?
+  createdAt   DateTime  @default(now())
+  lastUsed    DateTime?
+  suspicious  Boolean   @default(false)
+  suspiciousReasons String?
+  
+  @@index([type])
+  @@index([suspicious])
+}
+
+model SyncLog {
+  id        String    @id @default(uuid())
+  source    String
+  status    String
+  itemCount Int       @default(0)
+  errors    String?
+  startedAt DateTime
+  endedAt   DateTime?
+  
+  @@index([source])
+}

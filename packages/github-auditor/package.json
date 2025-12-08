@@ -1,0 +1,7 @@
+{
+  "name": "@aegis/github-auditor",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": { "commander": "^11.1.0" },
+  "devDependencies": { "typescript": "^5.3.0", "ts-node": "^10.9.0" }
+}

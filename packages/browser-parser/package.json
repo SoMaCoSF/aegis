@@ -1,0 +1,17 @@
+{
+  "name": "@aegis/browser-parser",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "scan": "npx ts-node src/cli.ts"
+  },
+  "dependencies": {
+    "@aegis/core": "*",
+    "commander": "^11.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "ts-node": "^10.9.0"
+  }
+}
