@@ -13,6 +13,7 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
+    "dashboard": "cd packages/dashboard && npm run dev",
     "db:push": "cd database && npx prisma db push",
     "db:studio": "cd database && npx prisma studio",
     "db:generate": "cd database && npx prisma generate",

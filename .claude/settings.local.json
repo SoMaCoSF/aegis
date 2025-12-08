@@ -10,7 +10,13 @@
       "Bash(powershell.exe -Command \"gh auth status\")",
       "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git status 2>&1\")",
       "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git init; git add .; git commit -m ''🎉 Initial AEGIS scaffold''\")",
-      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git config user.email ''somacosf@users.noreply.github.com''; git config user.name ''SoMaCoSF''; git add .; git commit -m ''🎉 Initial AEGIS scaffold''\")"
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git config user.email ''somacosf@users.noreply.github.com''; git config user.name ''SoMaCoSF''; git add .; git commit -m ''🎉 Initial AEGIS scaffold''\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis\\packages\\dashboard''; if (-not (Test-Path .)) { New-Item -ItemType Directory -Path ''D:\\somacosf\\aegis\\packages\\dashboard'' -Force }\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis\\packages\\dashboard''; npm install 2>&1\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; npm run db:generate 2>&1\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; npm run dashboard\")",
+      "Bash(powershell.exe -Command \"Invoke-WebRequest -Uri ''http://localhost:4242'' -UseBasicParsing -TimeoutSec 5 | Select-Object -ExpandProperty StatusCode\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git add .; git status\")"
     ],
     "deny": [],
     "ask": []
