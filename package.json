@@ -18,6 +18,7 @@
     "db:studio": "cd database && npx prisma studio",
     "db:generate": "cd database && npx prisma generate",
     "browser:scan": "cd packages/browser-parser && npm run scan",
+    "browser:import": "cd packages/browser-parser && npm run import",
     "github:audit": "cd packages/github-auditor && npm run audit"
   },
   "devDependencies": {

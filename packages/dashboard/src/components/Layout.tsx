@@ -6,7 +6,9 @@ import {
   Github,
   Shield,
   Settings,
-  RefreshCw
+  RefreshCw,
+  Network,
+  Sparkles
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -16,6 +18,8 @@ const navItems = [
   { to: '/subscriptions', icon: CreditCard, label: 'Subscriptions' },
   { to: '/github', icon: Github, label: 'GitHub' },
   { to: '/privacy', icon: Shield, label: 'Privacy' },
+  { to: '/network', icon: Network, label: 'Network' },
+  { to: '/assistant', icon: Sparkles, label: 'Assistant' },
 ]
 
 export default function Layout() {

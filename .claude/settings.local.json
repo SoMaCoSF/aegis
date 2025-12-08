@@ -16,7 +16,14 @@
       "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; npm run db:generate 2>&1\")",
       "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; npm run dashboard\")",
       "Bash(powershell.exe -Command \"Invoke-WebRequest -Uri ''http://localhost:4242'' -UseBasicParsing -TimeoutSec 5 | Select-Object -ExpandProperty StatusCode\")",
-      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git add .; git status\")"
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git add .; git status\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git commit -m ''✨ Add React dashboard with Vite + Tailwind on localhost:4242\n\n- Full dashboard UI with sidebar navigation\n- Pages: Dashboard, Accounts, Subscriptions, GitHub, Privacy\n- Express API server on port 4243 with Prisma integration\n- Recharts for data visualization\n- Lucide icons throughout\n- Mock data fallback when database is empty\n\n🤖 Generated with Claude Code (https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>''\")",
+      "Bash(dir \"D:\\somacosf\\outputs\\dmbt\" /B)",
+      "Bash(dir \"D:\\somacosf\\outputs\\dmbt\\agent\")",
+      "Bash(dir:*)",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git add .; git status --short\")",
+      "Bash(powershell.exe -Command \"gh gist create ''D:\\somacosf\\aegis\\docs\\AEGIS-GIST.md'' --public --desc ''🔐 AEGIS - Complete Digital Footprint Management System - Architecture, Setup, Browser Import, Multi-Machine Sync, Network Protection''\")",
+      "Bash(powershell.exe -Command \"cd ''D:\\somacosf\\aegis''; git add .; git commit -m ''✨ Add browser importer, Claude assistant, network protection, and comprehensive docs\n\nFeatures:\n- Browser CSV importer with TUI and AES-256-GCM encryption for cloud sync\n- Claude Code chat interface in dashboard (Assistant page)\n- Network protection page integrating DMBT/Ghost_Shell\n- Comprehensive README with architecture diagrams\n- MIT License\n- Detailed gist documentation\n\nNew pages:\n- /assistant - Claude Code integration for live modifications\n- /network - DMBT + Ghost_Shell status and ASN blocking\n\nSecurity:\n- Never stores actual passwords (only boolean flag)\n- No PII vectors in codebase\n- Encrypted sync for multi-machine setups\n\n🤖 Generated with Claude Code\n\nCo-Authored-By: Claude <noreply@anthropic.com>''\")"
     ],
     "deny": [],
     "ask": []

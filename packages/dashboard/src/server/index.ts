@@ -225,6 +225,36 @@ function formatTimeAgo(date: Date): string {
   return `${Math.floor(seconds / 86400)} days ago`
 }
 
+// Claude Code integration
+app.get('/api/claude/status', (_req, res) => {
+  // Check if Claude Code is available
+  // In production, this would check for a running Claude Code session
+  res.json({ connected: false, mode: 'offline' })
+})
+
+app.post('/api/claude/chat', async (req, res) => {
+  const { message } = req.body
+  // In production, this would forward to Claude Code
+  // For now, return acknowledgment
+  res.json({
+    response: `Received: "${message}". Claude Code integration requires running \`claude\` in your terminal with the AEGIS project open.`,
+    timestamp: new Date().toISOString()
+  })
+})
+
+// Network/DMBT integration
+app.get('/api/network/stats', async (_req, res) => {
+  // This would query DMBT's database at d:\somacosf\outputs\dmbt\data\dmbt.sqlite
+  // For now, return mock stats
+  res.json({
+    totalASNs: 156,
+    blockedASNs: 23,
+    totalPrefixes: 4521,
+    blockedPrefixes: 892,
+    connectionStatus: 'partial'
+  })
+})
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🛡️  AEGIS API Server running on http://localhost:${PORT}`)
