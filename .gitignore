@@ -32,3 +32,8 @@ brave_*.json
 *.encrypted
 passwords.txt
 logins.json
+
+# Local network/machine-specific scripts - contain IPs and hostnames
+setup-*-shares.ps1
+*-network-setup.ps1
+scripts/setup-*.ps1
