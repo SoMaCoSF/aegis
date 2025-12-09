@@ -1,8 +1,8 @@
-# 🔐 AEGIS - Complete Digital Footprint Management System
+# 🔐 AEGIS Privacy Suite v1.0.0
 
 > **Account & Enterprise Guardian Intelligence System**
 >
-> See everything. Control everything. Pay for nothing extra.
+> Complete Digital Footprint Management with DMBT + Ghost_Shell Integration
 
 **GitHub Repository**: [github.com/SoMaCoSF/aegis](https://github.com/SoMaCoSF/aegis)
 
@@ -10,60 +10,42 @@
 
 ## 📋 Table of Contents
 
-1. [What is AEGIS?](#what-is-aegis)
+1. [What's New in v1.0.0](#whats-new-in-v100)
 2. [Architecture Overview](#architecture-overview)
-3. [Installation Guide](#installation-guide)
-4. [Browser Password Import](#browser-password-import)
-5. [Multi-Machine Sync](#multi-machine-sync-encrypted)
-6. [Network Protection Layer](#network-protection-layer)
-7. [Dashboard Features](#dashboard-features)
-8. [Database Schema](#database-schema)
+3. [Quick Start](#quick-start)
+4. [Dashboard Pages (15)](#dashboard-pages-15)
+5. [API Endpoints](#api-endpoints)
+6. [DMBT Integration](#dmbt-integration)
+7. [Ghost_Shell Integration](#ghost_shell-integration)
+8. [Browser Import](#browser-import)
 9. [Security Model](#security-model)
-10. [Integration Guide](#integration-guide)
+10. [CLI Commands](#cli-commands)
 
 ---
 
-## What is AEGIS?
+## What's New in v1.0.0
 
-AEGIS is a **local-first** privacy toolkit that gives you complete visibility and control over your digital footprint:
+### Full Privacy Suite Integration
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                  │
-│   ╔═══════════════════════════════════════════════════════════════════════════╗ │
-│   ║                              AEGIS                                         ║ │
-│   ║              Account & Enterprise Guardian Intelligence System             ║ │
-│   ╚═══════════════════════════════════════════════════════════════════════════╝ │
-│                                                                                  │
-│   ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐              │
-│   │     DISCOVER     │  │     ANALYZE      │  │     CONTROL      │              │
-│   │                  │  │                  │  │                  │              │
-│   │  ✓ 47 Accounts   │  │  ✓ $89/mo spend  │  │  ✓ 2FA enabled   │              │
-│   │  ✓ 12 Subs       │  │  ✓ 3 breaches    │  │  ✓ Cancel subs   │              │
-│   │  ✓ 8 OAuth apps  │  │  ✓ 5 exposures   │  │  ✓ Block ASNs    │              │
-│   │  ✓ 3 SSH keys    │  │  ✓ weak pwds: 8  │  │  ✓ Remove data   │              │
-│   └──────────────────┘  └──────────────────┘  └──────────────────┘              │
-│                                                                                  │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
+AEGIS v1.0.0 combines three powerful privacy tools:
 
-### Core Features
+| Component | Purpose | Port | Status |
+|-----------|---------|------|--------|
+| **AEGIS Dashboard** | React web UI for monitoring | 4242 | ✅ Live |
+| **AEGIS API** | Express backend with Prisma | 4243 | ✅ Live |
+| **DMBT** | Network-layer ASN/prefix blocking | 8088 | Optional |
+| **Ghost_Shell** | Application-layer fingerprint protection | 8080 | Optional |
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| 📊 **Account Inventory** | Extract accounts from Chrome, Edge, Firefox, Brave, password managers | ✅ |
-| 💳 **Subscription Tracker** | Track recurring payments with cost analysis | ✅ |
-| 🐙 **GitHub Auditor** | Audit OAuth apps, SSH keys, deploy keys | ✅ |
-| 🕵️ **Privacy Manager** | Track data broker exposure and removal status | ✅ |
-| 🌐 **Network Protection** | Block corporate tracking at infrastructure level | ✅ |
-| 🤖 **AI Assistant** | Claude Code integration for live modifications | ✅ |
-| 🔐 **Encrypted Sync** | AES-256-GCM encrypted cloud sync for multi-machine | ✅ |
-| 🧠 **Knowledge Graph** | Three.js 3D visualization of your digital footprint | ✅ |
-| 📊 **AI Usage Tracker** | Monitor Claude, ChatGPT, Perplexity usage and costs | ✅ |
-| 🔍 **Account Discovery** | Discover accounts from browser history | ✅ |
-| 👥 **Social Monitor** | Track social media accounts and privacy settings | ✅ |
-| 💰 **Financial Dashboard** | Trading account overview (Alpaca, Coinbase) | ✅ |
-| ☁️ **Cloud Auditor** | Monitor Google Drive, Dropbox, OneDrive usage | ✅ |
+### New Features
+
+- ✅ **Unified API** - 50+ endpoints for DMBT and Ghost_Shell control
+- ✅ **Real-time Database Access** - Direct SQLite queries to DMBT and Ghost_Shell DBs
+- ✅ **System Status Page** - All integrations health check in one place
+- ✅ **Network Protection Dashboard** - Live DMBT stats with ASN/IP/prefix management
+- ✅ **Proxy Control Dashboard** - Ghost_Shell fingerprint rotation and cookie blocking
+- ✅ **Collapsible Navigation** - 15 pages organized in 5 categories
+- ✅ **Health Indicators** - Real-time service status in sidebar
+- ✅ **Unified Launcher** - Single PowerShell script to start all services
 
 ---
 
@@ -71,599 +53,300 @@ AEGIS is a **local-first** privacy toolkit that gives you complete visibility an
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                              AEGIS ARCHITECTURE                                  │
+│                         AEGIS PRIVACY SUITE v1.0.0                              │
 │                                                                                 │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                        PRESENTATION LAYER                                  │ │
-│  │                                                                           │ │
-│  │   ┌─────────────────────────────────────────────────────────────────┐    │ │
-│  │   │                 Dashboard (localhost:4242)                       │    │ │
-│  │   │   React 18 + TypeScript + Vite + Tailwind CSS + Recharts        │    │ │
-│  │   │                                                                  │    │ │
-│  │   │   Pages:                                                         │    │ │
-│  │   │   • Dashboard - Stats overview with charts                      │    │ │
-│  │   │   • Accounts - Searchable account list with 2FA status          │    │ │
-│  │   │   • Subscriptions - Cost tracking with billing alerts           │    │ │
-│  │   │   • GitHub - OAuth apps and SSH key audit                       │    │ │
-│  │   │   • Privacy - Data broker exposure tracking                     │    │ │
-│  │   │   • Network - DMBT/Ghost_Shell integration                      │    │ │
-│  │   │   • Assistant - Claude Code chat interface                      │    │ │
-│  │   └─────────────────────────────────────────────────────────────────┘    │ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
-│                                      │                                          │
-│                                      ▼                                          │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                           API LAYER                                        │ │
-│  │                                                                           │ │
-│  │   ┌─────────────────────────────────────────────────────────────────┐    │ │
-│  │   │                 Express Server (localhost:4243)                  │    │ │
-│  │   │                                                                  │    │ │
-│  │   │   Endpoints:                                                     │    │ │
-│  │   │   GET  /api/dashboard/stats    - Aggregated statistics          │    │ │
-│  │   │   GET  /api/accounts           - Account list                   │    │ │
-│  │   │   GET  /api/subscriptions      - Subscription list              │    │ │
-│  │   │   GET  /api/github/integrations - GitHub integrations           │    │ │
-│  │   │   POST /api/github/scan        - Trigger GitHub audit           │    │ │
-│  │   │   GET  /api/privacy/exposures  - Data broker exposures          │    │ │
-│  │   │   GET  /api/network/stats      - Network protection stats       │    │ │
-│  │   │   POST /api/claude/chat        - Claude Code integration        │    │ │
-│  │   │   POST /api/sync               - Sync all data sources          │    │ │
-│  │   └─────────────────────────────────────────────────────────────────┘    │ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
-│                                      │                                          │
-│                                      ▼                                          │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                          DATA LAYER                                        │ │
-│  │                                                                           │ │
-│  │   ┌─────────────────────────────────────────────────────────────────┐    │ │
-│  │   │                 SQLite + Prisma ORM                              │    │ │
-│  │   │                                                                  │    │ │
-│  │   │   Tables:                                                        │    │ │
-│  │   │   • Account - Domain, username, email, 2FA, category            │    │ │
-│  │   │   • Subscription - Name, cost, billing cycle, status            │    │ │
-│  │   │   • GitHubIntegration - Type, name, permissions, suspicious     │    │ │
-│  │   │   • PrivacyExposure - Broker, data found, removal status        │    │ │
-│  │   │   • BreachExposure - Breach name, date, data types              │    │ │
-│  │   │   • EmailSubscription - Sender, frequency, unsubscribe          │    │ │
-│  │   │   • SyncLog - Source, status, timestamps                        │    │ │
-│  │   └─────────────────────────────────────────────────────────────────┘    │ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
-│                                                                                 │
-│  ═══════════════════════════════════════════════════════════════════════════   │
-│                         NETWORK PROTECTION (Optional)                            │
-│  ═══════════════════════════════════════════════════════════════════════════   │
-│                                                                                 │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                     Ghost_Shell (Application Layer)                        │ │
-│  │                                                                           │ │
-│  │   Proxy Server (localhost:8080):                                          │ │
-│  │   • Fingerprint rotation - User-Agent, Accept-Language, headers          │ │
-│  │   • Cookie interception - Block Set-Cookie headers                        │ │
-│  │   • Tracker blocking - Pattern-based domain blocking                      │ │
-│  │   • Request logging - Full HTTP traffic audit                             │ │
-│  │   • OpenTelemetry - Distributed tracing                                   │ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
-│                                      │                                          │
-│                                      ▼                                          │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                        DMBT (Network Layer)                                │ │
-│  │                                                                           │ │
-│  │   Infrastructure Blocking:                                                 │ │
-│  │   • Domain → IP resolution (socket.getaddrinfo)                           │ │
-│  │   • IP → ASN lookup (Team Cymru whois)                                    │ │
-│  │   • ASN → Prefix expansion (RIPEstat API)                                 │ │
-│  │   • Windows Firewall rules (New-NetFirewallRule)                          │ │
-│  │                                                                           │ │
-│  │   Example: Block all Meta traffic                                          │ │
-│  │   facebook.com → 157.240.x.x → AS32934 → 892 prefixes → BLOCKED          │ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │                 React Dashboard (localhost:4242)                         │   │
+│  │  15 Pages: Dashboard, Status, Accounts, Network, Proxy, and more...     │   │
+│  └────────────────────────────────────┬────────────────────────────────────┘   │
+│                                       │                                         │
+│                                       ▼                                         │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │                 Express API Server (localhost:4243)                      │   │
+│  │  Unified access to all databases and services                           │   │
+│  └────────────────────────────────────┬────────────────────────────────────┘   │
+│                                       │                                         │
+│           ┌───────────────────────────┼───────────────────────┐                │
+│           │                           │                       │                │
+│           ▼                           ▼                       ▼                │
+│  ┌─────────────────┐        ┌─────────────────┐    ┌─────────────────┐        │
+│  │   AEGIS DB      │        │    DMBT DB      │    │  Ghost_Shell DB │        │
+│  │   (Prisma)      │        │    (SQLite)     │    │    (SQLite)     │        │
+│  │  Accounts,      │        │  ASNs, IPs,     │    │  Requests,      │        │
+│  │  Subscriptions  │        │  Prefixes,      │    │  Cookies,       │        │
+│  │                 │        │  Blocklist      │    │  Fingerprints   │        │
+│  └─────────────────┘        └─────────────────┘    └─────────────────┘        │
+│                                       │                       │                │
+│                                       ▼                       ▼                │
+│                            ┌─────────────────┐    ┌─────────────────┐         │
+│                            │  DMBT Agent     │    │ Ghost_Shell     │         │
+│                            │  (Go :8088)     │    │  Proxy (:8080)  │         │
+│                            │  ASN blocking   │    │  mitmproxy      │         │
+│                            └─────────────────┘    └─────────────────┘         │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Installation Guide
+## Quick Start
 
 ### Prerequisites
 
-```
-Node.js     >= 20.0.0
-npm         >= 9.0.0
-Windows     10/11 (for browser password extraction)
-GitHub CLI  (gh) for GitHub auditing
-```
+- Node.js 20+
+- Python 3.12+ (for DMBT/Ghost_Shell)
+- Windows 10/11
+- PowerShell 7+
+- GitHub CLI (`gh`) for GitHub auditing
 
-### Quick Start
+### Installation
 
-```bash
-# Clone the repository
+```powershell
+# Clone and install
 git clone https://github.com/SoMaCoSF/aegis.git
 cd aegis
-
-# Install all dependencies
 npm install
 
 # Generate Prisma client
 npm run db:generate
 
-# Create database and push schema
+# Push database schema
 npm run db:push
 
-# Start the dashboard
+# Start dashboard
 npm run dashboard
-
-# Open in browser
-# http://localhost:4242
 ```
 
-### Project Structure
+### Using the Unified Launcher
 
+```powershell
+# Check status of all services
+.\scripts\start-aegis.ps1 -Status
+
+# Start everything
+.\scripts\start-aegis.ps1 -All
+
+# Or individual services
+.\scripts\start-aegis.ps1 -Dashboard
+.\scripts\start-aegis.ps1 -DMBT
+.\scripts\start-aegis.ps1 -Ghost
 ```
-aegis/
-├── database/
-│   ├── prisma/
-│   │   └── schema.prisma          # Database schema
-│   └── data/
-│       └── aegis.db               # SQLite database (created on first run)
-│
-├── packages/
-│   ├── core/                      # Shared TypeScript types
-│   │   └── src/types/
-│   │       ├── account.ts
-│   │       └── subscription.ts
-│   │
-│   ├── browser-parser/            # Browser password CSV import
-│   │   └── src/
-│   │       ├── cli.ts             # Browser location scanner
-│   │       └── importer.ts        # TUI importer with encryption
-│   │
-│   ├── github-auditor/            # GitHub security audit
-│   │   └── src/
-│   │       └── cli.ts             # OAuth apps + SSH keys scanner
-│   │
-│   ├── email-scanner/             # Email subscription discovery
-│   ├── privacy-manager/           # Data broker tracking
-│   ├── subscription-tracker/      # Cost tracking logic
-│   ├── commerce-connectors/       # Amazon, PayPal integration
-│   │
-│   └── dashboard/                 # React dashboard
-│       ├── src/
-│       │   ├── pages/
-│       │   │   ├── Dashboard.tsx
-│       │   │   ├── Accounts.tsx
-│       │   │   ├── Subscriptions.tsx
-│       │   │   ├── GitHub.tsx
-│       │   │   ├── Privacy.tsx
-│       │   │   ├── Network.tsx
-│       │   │   └── Assistant.tsx
-│       │   ├── components/
-│       │   │   ├── Layout.tsx
-│       │   │   └── StatCard.tsx
-│       │   └── server/
-│       │       └── index.ts       # Express API server
-│       ├── package.json
-│       └── vite.config.ts
-│
-├── package.json                   # Monorepo root
-├── turbo.json                     # Turborepo build config
-└── README.md
+
+### Access Points
+
+| Service | URL |
+|---------|-----|
+| Dashboard | http://localhost:4242 |
+| API | http://localhost:4243 |
+| Proxy | 127.0.0.1:8080 (configure browser) |
+
+---
+
+## Dashboard Pages (15)
+
+### Core
+| Page | Description |
+|------|-------------|
+| **Dashboard** | Overview with stats, charts, recent activity |
+| **System Status** | All integrations health check, service status, quick actions |
+
+### Privacy Suite
+| Page | Description |
+|------|-------------|
+| **Network (DMBT)** | ASN/prefix blocking, IP intelligence, blocklist management |
+| **Proxy (Ghost)** | Fingerprint rotation, cookie blocking, request logs |
+| **Privacy Exposure** | Data broker tracking, removal status |
+
+### Account Management
+| Page | Description |
+|------|-------------|
+| **Accounts** | Imported accounts from browsers with 2FA status |
+| **Subscriptions** | Recurring payments tracking with cost analysis |
+| **Discovery** | Account discovery from browsing history |
+
+### Integrations
+| Page | Description |
+|------|-------------|
+| **GitHub** | OAuth apps and SSH key auditing |
+| **Social** | Social media account tracker |
+| **Finance** | Financial/trading accounts |
+| **Cloud Storage** | Cloud service usage monitoring |
+
+### Tools
+| Page | Description |
+|------|-------------|
+| **Assistant** | Claude Code integration for live modifications |
+| **Knowledge Graph** | 3D relationship visualization (Three.js) |
+| **AI Tracker** | AI usage monitoring (Claude, ChatGPT, etc.) |
+
+---
+
+## API Endpoints
+
+### Health & Status
+```
+GET /api/health          - Service health check
+GET /api/status          - Full system status with all integrations
+GET /api/dashboard/stats - Dashboard statistics
+```
+
+### DMBT Endpoints
+```
+GET  /api/dmbt/stats           - DMBT statistics (domains, IPs, ASNs, prefixes)
+GET  /api/dmbt/ips             - IP mappings with ASN info
+GET  /api/dmbt/asns            - ASN list with prefix counts
+GET  /api/dmbt/asns/:asn       - Single ASN details
+GET  /api/dmbt/prefixes        - Prefix mappings
+GET  /api/dmbt/blocklist       - Blocklist entries
+POST /api/dmbt/blocklist       - Add to blocklist
+DELETE /api/dmbt/blocklist/:id - Remove from blocklist
+POST /api/dmbt/agent/start     - Start DMBT agent
+POST /api/dmbt/agent/stop      - Stop DMBT agent
+```
+
+### Ghost_Shell Endpoints
+```
+GET  /api/ghost/stats          - Ghost_Shell statistics
+GET  /api/ghost/domains        - Tracking domains
+GET  /api/ghost/cookies        - Cookie traffic
+GET  /api/ghost/fingerprints   - Fingerprint rotations
+GET  /api/ghost/requests       - Request log (paginated)
+GET  /api/ghost/whitelist      - Whitelist entries
+POST /api/ghost/whitelist      - Add to whitelist
+DELETE /api/ghost/whitelist/:id - Remove from whitelist
+POST /api/ghost/proxy/start    - Start Ghost_Shell proxy
+POST /api/ghost/proxy/stop     - Stop Ghost_Shell proxy
+```
+
+### Legacy AEGIS Endpoints
+```
+GET  /api/accounts             - All accounts
+GET  /api/subscriptions        - Subscriptions
+GET  /api/github/integrations  - GitHub integrations
+POST /api/github/scan          - Trigger GitHub audit
+GET  /api/privacy/exposures    - Data broker exposures
+POST /api/sync                 - Sync all data sources
 ```
 
 ---
 
-## Browser Password Import
+## DMBT Integration
 
-### Supported Browsers & Password Managers
+**DMBT (Delete Me | Block Them)** provides network-layer privacy protection:
 
-| Source | CSV Columns | Status |
-|--------|-------------|--------|
-| Chrome | name, url, username, password | ✅ |
-| Edge | name, url, username, password | ✅ |
-| Firefox | hostname, username, password | ✅ |
-| Brave | name, url, username, password | ✅ |
-| Bitwarden | name, login_uri, login_username, login_password | ✅ |
-| LastPass | name, url, username, password | ✅ |
-| 1Password | Title, Url, Username, Password | ✅ |
-| Dashlane | title, url, username, password | ✅ |
-| KeePass | Title, URL, UserName, Password | ✅ |
+### Features
+- Domain → IP → ASN → Prefix mapping
+- Team Cymru whois integration
+- RIPEstat API for prefix discovery
+- Windows Firewall rule generation
+- Blocklist management
 
-### Export Instructions
+### Database Schema (dmbt.sqlite)
+```sql
+-- IP Mappings
+ip_mappings (domain, ip, ip_version, asn, asn_name, source, seen_at)
 
-```
-╔═══════════════════════════════════════════════════════════════════════════════╗
-║                     HOW TO EXPORT BROWSER PASSWORDS                           ║
-╠═══════════════════════════════════════════════════════════════════════════════╣
-║                                                                               ║
-║  🌐 CHROME / EDGE / BRAVE                                                     ║
-║  ─────────────────────────────────────────────────────────────────────────── ║
-║  1. Open browser settings (chrome://settings/passwords)                       ║
-║  2. Click the ⋮ menu next to "Saved Passwords"                               ║
-║  3. Select "Export passwords"                                                 ║
-║  4. Authenticate with Windows credentials                                     ║
-║  5. Save the CSV file                                                         ║
-║                                                                               ║
-║  🦊 FIREFOX                                                                    ║
-║  ─────────────────────────────────────────────────────────────────────────── ║
-║  1. Open about:logins                                                         ║
-║  2. Click ⋮ menu → "Export Logins..."                                        ║
-║  3. Authenticate and save CSV                                                 ║
-║                                                                               ║
-║  🔐 BITWARDEN / LASTPASS / 1PASSWORD                                          ║
-║  ─────────────────────────────────────────────────────────────────────────── ║
-║  1. Open vault → Settings/Tools → Export                                      ║
-║  2. Select CSV format                                                         ║
-║  3. Enter master password                                                     ║
-║                                                                               ║
-╚═══════════════════════════════════════════════════════════════════════════════╝
+-- ASN Details
+asns (asn, org_name, rir, description, blocked)
+
+-- Prefix Mappings
+prefix_mappings (asn, prefix, ip_version, source)
+
+-- Blocklist
+blocklist (asn, reason, blocked_at)
 ```
 
-### Import to AEGIS
+### Example Data (from live system)
+```json
+{
+  "totalDomains": 17,
+  "totalIPs": 38,
+  "totalASNs": 5,
+  "totalPrefixes": 25242,
+  "topASNs": [
+    {"asn": "16509", "org_name": "Amazon", "ip_count": 17},
+    {"asn": "54113", "org_name": "Fastly", "ip_count": 8},
+    {"asn": "32934", "org_name": "Meta", "ip_count": 5},
+    {"asn": "15169", "org_name": "Google", "ip_count": 3}
+  ]
+}
+```
 
+---
+
+## Ghost_Shell Integration
+
+**Ghost_Shell** provides application-layer privacy protection:
+
+### Features
+- Browser fingerprint randomization (5 rotation modes)
+- Cookie blocking with tracking patterns
+- Request/response logging
+- OpenTelemetry instrumentation
+- Whitelist management
+
+### Fingerprint Rotation Modes
+1. **Static** - Fixed fingerprint per session
+2. **Per-Domain** - Different fingerprint per domain
+3. **Per-Request** - New fingerprint every request
+4. **Timed** - Rotate every N minutes
+5. **Random** - Random rotation timing
+
+### Database Schema (ghost.db)
+```sql
+-- Request Log
+requests (id, timestamp, method, url, status_code, blocked, reason)
+
+-- Cookie Traffic
+cookies (id, domain, name, value, blocked, timestamp)
+
+-- Fingerprints
+fingerprints (id, timestamp, user_agent, accept_language, mode)
+
+-- Tracking Domains
+tracking_domains (domain, category, blocked)
+
+-- Whitelist
+whitelist (id, domain, reason, added_at)
+```
+
+---
+
+## Browser Import
+
+### Supported Sources
+| Source | Status |
+|--------|--------|
+| Chrome | ✅ |
+| Edge | ✅ |
+| Firefox | ✅ |
+| Brave | ✅ |
+| Bitwarden | ✅ |
+| LastPass | ✅ |
+| 1Password | ✅ |
+
+### Import Commands
 ```bash
 # Interactive TUI
 npm run browser:import
 
-# Menu options:
-# 1. Import from CSV file
-# 2. Scan browser locations
-# 3. Export instructions
-# 4. Encrypt CSV for cloud sync
-# 5. Decrypt synced CSV
-# 6. View import statistics
-# 7. Exit
+# Direct CLI
+cd packages/browser-parser
+npx tsx src/importer.ts
 ```
 
-### What Gets Imported
-
-AEGIS extracts and stores:
-- ✅ Domain (e.g., `github.com`)
-- ✅ URL
-- ✅ Username
-- ✅ Email (auto-detected from username)
-- ✅ Has password (boolean)
-- ✅ Category (auto-inferred)
-- ✅ Source (which browser)
-
-AEGIS **NEVER** stores:
-- ❌ Actual passwords
-- ❌ Password hashes
-- ❌ Authentication tokens
-
----
-
-## Multi-Machine Sync (Encrypted)
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                        ENCRYPTED MULTI-MACHINE SYNC                              │
-│                                                                                 │
-│   ┌─────────────┐                                          ┌─────────────┐     │
-│   │  Machine A  │                                          │  Machine B  │     │
-│   │  (Desktop)  │                                          │  (Laptop)   │     │
-│   └──────┬──────┘                                          └──────┬──────┘     │
-│          │                                                        │            │
-│          ▼                                                        │            │
-│   ┌─────────────┐                                                 │            │
-│   │ Export CSV  │                                                 │            │
-│   │ from browser│                                                 │            │
-│   └──────┬──────┘                                                 │            │
-│          │                                                        │            │
-│          ▼                                                        │            │
-│   ┌─────────────────────────────────────┐                         │            │
-│   │        AEGIS ENCRYPTION             │                         │            │
-│   │                                     │                         │            │
-│   │  • Algorithm: AES-256-GCM          │                         │            │
-│   │  • Key derivation: scrypt          │                         │            │
-│   │  • Salt: 32 bytes random           │                         │            │
-│   │  • IV: 16 bytes random             │                         │            │
-│   │  • Auth tag: 16 bytes              │                         │            │
-│   └──────┬──────────────────────────────┘                         │            │
-│          │                                                        │            │
-│          ▼                                                        │            │
-│   ┌─────────────┐                                                 │            │
-│   │ passwords   │                                                 │            │
-│   │ .encrypted  │ ──────────────▶ Google Drive ──────────────────▶│            │
-│   └─────────────┘                (or any cloud)                   │            │
-│                                                                   ▼            │
-│                                                            ┌─────────────┐     │
-│                                                            │ Download    │     │
-│                                                            │ .encrypted  │     │
-│                                                            └──────┬──────┘     │
-│                                                                   │            │
-│                                                                   ▼            │
-│                                                            ┌─────────────┐     │
-│                                                            │ AEGIS       │     │
-│                                                            │ Decrypt     │     │
-│                                                            └──────┬──────┘     │
-│                                                                   │            │
-│                                                                   ▼            │
-│                                                            ┌─────────────┐     │
-│                                                            │ Import to   │     │
-│                                                            │ Database    │     │
-│                                                            └─────────────┘     │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Encryption Details
-
-```typescript
-// File format: salt (32) + iv (16) + authTag (16) + encrypted data
-const ENCRYPTION_ALGORITHM = 'aes-256-gcm'
-
-function encryptFile(inputPath: string, outputPath: string, password: string): void {
-  const content = readFileSync(inputPath)
-  const salt = randomBytes(32)
-  const key = scryptSync(password, salt, 32)
-  const iv = randomBytes(16)
-
-  const cipher = createCipheriv(ENCRYPTION_ALGORITHM, key, iv)
-  const encrypted = Buffer.concat([cipher.update(content), cipher.final()])
-  const authTag = cipher.getAuthTag()
-
-  const output = Buffer.concat([salt, iv, authTag, encrypted])
-  writeFileSync(outputPath, output)
-}
-```
-
-### Workflow
-
+### Multi-Machine Sync (Encrypted)
 ```bash
-# MACHINE A: Encrypt and upload
+# On source machine - encrypt
 npm run browser:import
-# Select: 4. Encrypt CSV for cloud sync
-# Enter password
-# Upload passwords.encrypted to Google Drive
+# Select: "Encrypt CSV for cloud sync"
 
-# MACHINE B: Download and decrypt
+# On target machine - decrypt
 npm run browser:import
-# Select: 5. Decrypt synced CSV
-# Enter same password
-# Select: 1. Import from CSV file
+# Select: "Decrypt synced CSV"
 ```
 
----
-
-## Network Protection Layer
-
-AEGIS integrates with **DMBT** and **Ghost_Shell** for defense-in-depth privacy:
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                              DEFENSE IN DEPTH                                    │
-│                                                                                 │
-│   ┌─────────────────────────────────────────────────────────────────────────┐  │
-│   │  LAYER 1: Ghost_Shell (Application)                                      │  │
-│   │                                                                          │  │
-│   │  Browser ──▶ Proxy (localhost:8080)                                      │  │
-│   │              │                                                           │  │
-│   │              ├── Fingerprint Randomizer                                  │  │
-│   │              │   • User-Agent rotation (100+ agents)                    │  │
-│   │              │   • Accept-Language mixing (8+ languages)                │  │
-│   │              │   • DNT header randomization                             │  │
-│   │              │   • Referer stripping                                    │  │
-│   │              │                                                           │  │
-│   │              ├── Cookie Blocker                                          │  │
-│   │              │   • Block all Set-Cookie headers                         │  │
-│   │              │   • Pattern-based tracker detection                      │  │
-│   │              │   • Whitelist for legitimate sites                       │  │
-│   │              │                                                           │  │
-│   │              └── Request Logger                                          │  │
-│   │                  • Full HTTP traffic audit                              │  │
-│   │                  • OpenTelemetry tracing                                │  │
-│   └─────────────────────────────────────────────────────────────────────────┘  │
-│                                      │                                          │
-│                                      ▼                                          │
-│   ┌─────────────────────────────────────────────────────────────────────────┐  │
-│   │  LAYER 2: DMBT (Network)                                                 │  │
-│   │                                                                          │  │
-│   │  Intelligence Pipeline:                                                   │  │
-│   │  Domain ──▶ IP ──▶ ASN ──▶ Prefix ──▶ Firewall Rule                     │  │
-│   │                                                                          │  │
-│   │  Example: Blocking Meta                                                   │  │
-│   │  ┌────────────────────────────────────────────────────────────────────┐ │  │
-│   │  │ facebook.com                                                        │ │  │
-│   │  │      │                                                              │ │  │
-│   │  │      ▼ DNS Resolution                                               │ │  │
-│   │  │ 157.240.1.35                                                        │ │  │
-│   │  │      │                                                              │ │  │
-│   │  │      ▼ Team Cymru Whois                                             │ │  │
-│   │  │ AS32934 (Meta Platforms, Inc.)                                      │ │  │
-│   │  │      │                                                              │ │  │
-│   │  │      ▼ RIPEstat API                                                 │ │  │
-│   │  │ 892 IP Prefixes:                                                    │ │  │
-│   │  │   • 157.240.0.0/16                                                  │ │  │
-│   │  │   • 31.13.24.0/21                                                   │ │  │
-│   │  │   • 179.60.192.0/22                                                 │ │  │
-│   │  │   • ... (889 more)                                                  │ │  │
-│   │  │      │                                                              │ │  │
-│   │  │      ▼ Windows Firewall                                             │ │  │
-│   │  │ New-NetFirewallRule -DisplayName "Block AS32934"                    │ │  │
-│   │  │   -Direction Outbound -Action Block                                 │ │  │
-│   │  │   -RemoteAddress 157.240.0.0/16,31.13.24.0/21,...                   │ │  │
-│   │  └────────────────────────────────────────────────────────────────────┘ │  │
-│   └─────────────────────────────────────────────────────────────────────────┘  │
-│                                      │                                          │
-│                                      ▼                                          │
-│                               ┌─────────────┐                                   │
-│                               │  Internet   │                                   │
-│                               │  (Filtered) │                                   │
-│                               └─────────────┘                                   │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Dashboard Features
-
-### Dashboard Page
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│  AEGIS Dashboard                                                    [Sync All]  │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                 │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐               │
-│  │   Total     │ │   Active    │ │   Breach    │ │   Privacy   │               │
-│  │  Accounts   │ │    Subs     │ │  Exposures  │ │    Risks    │               │
-│  │     47      │ │     12      │ │      3      │ │      5      │               │
-│  │             │ │  $89.97/mo  │ │             │ │             │               │
-│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘               │
-│                                                                                 │
-│  ┌────────────────────────────────┐  ┌────────────────────────────────┐        │
-│  │   Accounts by Category        │  │   Monthly Spend by Category    │        │
-│  │                               │  │                                │        │
-│  │   Social      ████████████ 12 │  │        Streaming: $45.97       │        │
-│  │   Shopping    ███████████████ 15 │  │        ┌──────────┐          │        │
-│  │   Finance     ████████ 8      │  │        │          │          │        │
-│  │   Entertainment ███████ 7     │  │   SaaS:│  Pie     │ Gaming:  │        │
-│  │   Productivity █████ 5        │  │  $29.00│  Chart   │ $15.00   │        │
-│  │                               │  │        └──────────┘          │        │
-│  └────────────────────────────────┘  └────────────────────────────────┘        │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Accounts Page
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│  Accounts                                                                       │
-│  Manage your online accounts and credentials                                    │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│  [Search accounts...]                          [Filter: All Categories ▼]       │
-│                                                                                 │
-│  Total: 47    With 2FA: 23    No 2FA: 24    Weak Passwords: 8                  │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│  Domain          Account             Category      Security        Source       │
-│  ─────────────────────────────────────────────────────────────────────────────  │
-│  🌐 github.com    SoMaCoSF           Development   🛡️ ✓  🔑 strong  chrome      │
-│  🌐 google.com    user@gmail.com     Productivity  🛡️ ✓  🔑 strong  chrome      │
-│  🌐 netflix.com   user@example.com   Entertainment 🛡️ ✗  🔑 medium  chrome      │
-│  🌐 amazon.com    user@example.com   Shopping      🛡️ ✓  🔑 strong  chrome      │
-│  🌐 twitter.com   @somacosf          Social        🛡️ ✗  🔑 weak    chrome      │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
-
-### New Pages (v0.2.0)
-
-| Page | Description |
-|------|-------------|
-| **Knowledge Graph** | Interactive 3D visualization using Three.js with OrbitControls, node selection, and dynamic linking |
-| **AI Tracker** | Monitor AI usage across Claude, ChatGPT, Perplexity with token/cost tracking and Recharts visualizations |
-| **Discovery** | Discover accounts from browsing history with category filtering, import functionality |
-| **Social** | Social media account monitor with privacy level tracking, follower stats |
-| **Finance** | Trading account dashboard for Alpaca/Coinbase with portfolio charts, read-only API emphasis |
-| **Cloud Storage** | Audit Google Drive, Dropbox, OneDrive with usage tracking, connected apps, shared files alerts |
-
-### Network Page
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│  Network Protection                                      [DMBT: ●] [Ghost: ●]   │
-│  DMBT + Ghost_Shell integration for infrastructure-level blocking              │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                 │
-│  ╔═══════════════════════════════════════════════════════════════════════════╗ │
-│  ║  🛡️  PARTIAL PROTECTION                                                    ║ │
-│  ║  Some protection active - enable both DMBT and Ghost_Shell for full       ║ │
-│  ╚═══════════════════════════════════════════════════════════════════════════╝ │
-│                                                                                 │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐               │
-│  │ ASNs Found  │ │ASNs Blocked │ │ IP Prefixes │ │Active Rules │               │
-│  │     156     │ │     23      │ │   4,521     │ │     892     │               │
-│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘               │
-│                                                                                 │
-│  Discovered Organizations                    Recent Firewall Rules             │
-│  ─────────────────────────────              ──────────────────────             │
-│  🚫 Meta Platforms    AS32934  245 prefixes  157.240.0.0/16    [Active]        │
-│  ✓  Google LLC       AS15169  512 prefixes  Meta infrastructure                │
-│  ✓  Amazon.com       AS16509  389 prefixes                                     │
-│  ✓  Cloudflare       AS13335  156 prefixes  31.13.24.0/21     [Active]        │
-│                                              Facebook CDN                       │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Database Schema
-
-```prisma
-// database/prisma/schema.prisma
-
-model Account {
-  id               String         @id @default(uuid())
-  domain           String         // e.g., "github.com"
-  url              String?        // Full URL if available
-  username         String?        // Username or handle
-  email            String?        // Email address
-  passwordStored   Boolean        @default(false)  // Has password (NOT the password)
-  passwordStrength String?        // "strong" | "medium" | "weak" | "unknown"
-  has2FA           Boolean        @default(false)
-  category         String         // "Social" | "Shopping" | "Finance" | etc.
-  source           String         // "chrome" | "firefox" | "bitwarden" | etc.
-  lastLogin        DateTime?
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-
-  subscriptions    Subscription[]
-  breaches         BreachExposure[]
-}
-
-model Subscription {
-  id                  String    @id @default(uuid())
-  accountId           String
-  name                String    // "Netflix" | "Spotify" | etc.
-  cost                Float     // Monthly cost
-  currency            String    @default("USD")
-  billingCycle        String    // "monthly" | "yearly"
-  nextBillingDate     DateTime?
-  cancellationUrl     String?
-  canPause            Boolean   @default(false)
-  status              String    // "active" | "paused" | "cancelled"
-
-  account             Account   @relation(fields: [accountId], references: [id])
-}
-
-model GitHubIntegration {
-  id          String    @id @default(uuid())
-  type        String    // "oauth_app" | "ssh_key" | "deploy_key" | "webhook"
-  name        String
-  slug        String?
-  permissions String?
-  url         String?
-  createdAt   DateTime  @default(now())
-  lastUsed    DateTime?
-  suspicious  Boolean   @default(false)
-  suspiciousReasons String?
-}
-
-model PrivacyExposure {
-  id             String    @id @default(uuid())
-  brokerName     String    // "Spokeo" | "BeenVerified" | etc.
-  brokerUrl      String
-  dataFound      String    // "Name, Address, Phone"
-  removalStatus  String    // "pending" | "requested" | "removed"
-  removalDate    DateTime?
-  source         String    // "pentester.com" | "manual"
-}
-
-model BreachExposure {
-  id           String   @id @default(uuid())
-  accountId    String
-  breachName   String   // "Adobe 2013" | "LinkedIn 2012" | etc.
-  breachDate   DateTime
-  dataTypes    String   // "Email, Password, IP"
-  source       String   // "haveibeenpwned" | "manual"
-  acknowledged Boolean  @default(false)
-
-  account      Account  @relation(fields: [accountId], references: [id])
-}
-```
+**Encryption**: AES-256-GCM with scrypt key derivation.
 
 ---
 
@@ -671,163 +354,88 @@ model BreachExposure {
 
 ### What AEGIS Stores
 
-| Data Type | Stored? | Encrypted? | Notes |
-|-----------|---------|------------|-------|
-| Domain names | ✅ | No | Public information |
-| Usernames | ✅ | No | For identification |
-| Email addresses | ✅ | No | For identification |
-| **Passwords** | ❌ | N/A | **NEVER STORED** |
-| Password hashes | ❌ | N/A | **NEVER STORED** |
-| Has password (bool) | ✅ | No | Only boolean flag |
-| Password strength | ✅ | No | Category only |
-| 2FA status | ✅ | No | Boolean flag |
-| Subscription costs | ✅ | No | Financial tracking |
-| GitHub tokens | ❌ | N/A | Uses `gh` CLI auth |
+| Data | Storage | Notes |
+|------|---------|-------|
+| Account domains | SQLite | Public info |
+| Usernames/emails | SQLite | For identification |
+| Password hashes | **Never** | Only boolean "has password" |
+| 2FA status | SQLite | Security tracking |
+| Network intelligence | SQLite | ASNs, IPs, prefixes |
 
-### Data Flow
+### What AEGIS Never Stores
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                              DATA FLOW                                           │
-│                                                                                 │
-│   Browser CSV                                                                    │
-│   ┌──────────────────────────────────────────────┐                              │
-│   │ name,url,username,password                    │                              │
-│   │ GitHub,https://github.com,user,s3cr3t        │                              │
-│   └──────────────────────────────────────────────┘                              │
-│                          │                                                       │
-│                          ▼                                                       │
-│   ┌──────────────────────────────────────────────┐                              │
-│   │            AEGIS Importer                     │                              │
-│   │                                              │                              │
-│   │   ✅ Extract: domain, username, email        │                              │
-│   │   ✅ Detect: has password (true/false)       │                              │
-│   │   ❌ Discard: actual password value          │                              │
-│   │   ✅ Infer: category, source                 │                              │
-│   └──────────────────────────────────────────────┘                              │
-│                          │                                                       │
-│                          ▼                                                       │
-│   ┌──────────────────────────────────────────────┐                              │
-│   │              SQLite Database                  │                              │
-│   │                                              │                              │
-│   │   {                                          │                              │
-│   │     domain: "github.com",                    │                              │
-│   │     username: "user",                        │                              │
-│   │     passwordStored: true,  // NOT the pwd!  │                              │
-│   │     category: "Development"                  │                              │
-│   │   }                                          │                              │
-│   └──────────────────────────────────────────────┘                              │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
+- ❌ Actual passwords
+- ❌ Authentication tokens
+- ❌ Session cookies
+- ❌ Private keys
 
-### PII Considerations
+### Data Location
 
-AEGIS is designed to be **safe to version control**:
-
-- ❌ No actual passwords in database
-- ❌ No password hashes
-- ❌ No authentication tokens
-- ❌ No session cookies
-- ❌ No private keys
-- ✅ Database can be committed (contains only metadata)
-- ✅ `.gitignore` excludes CSV files and `.encrypted` files
+All data is stored locally. No data is sent to external servers.
 
 ---
 
-## Integration Guide
-
-### Integrating with DMBT
-
-```python
-# In your DMBT collector, after discovering prefixes:
-
-import requests
-
-def report_to_aegis(asn: str, org_name: str, prefixes: list):
-    """Send discovered ASN data to AEGIS dashboard."""
-    requests.post('http://localhost:4243/api/network/import', json={
-        'asn': asn,
-        'orgName': org_name,
-        'prefixes': prefixes
-    })
-```
-
-### Integrating with Ghost_Shell
-
-```python
-# In Ghost_Shell proxy, log blocked requests:
-
-def on_request_blocked(domain: str, reason: str):
-    """Notify AEGIS of blocked request."""
-    requests.post('http://localhost:4243/api/network/blocked', json={
-        'domain': domain,
-        'reason': reason,
-        'timestamp': datetime.now().isoformat()
-    })
-```
-
-### Claude Code Integration
-
-The Assistant page connects to Claude Code for live modifications:
-
-```typescript
-// packages/dashboard/src/pages/Assistant.tsx
-
-const sendMessage = async (message: string) => {
-  const response = await fetch('/api/claude/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message })
-  })
-  // Claude Code processes the message and can modify code in real-time
-}
-```
-
----
-
-## CLI Commands Reference
+## CLI Commands
 
 ```bash
 # Dashboard
-npm run dashboard           # Start on localhost:4242
+npm run dashboard         # Start dashboard on localhost:4242
 
 # Database
-npm run db:generate         # Regenerate Prisma client
-npm run db:push             # Push schema to SQLite
-npm run db:studio           # Open Prisma Studio GUI
+npm run db:generate       # Regenerate Prisma client
+npm run db:push           # Push schema changes
+npm run db:studio         # Open Prisma Studio GUI
 
 # Tools
-npm run browser:import      # Interactive TUI for password import
-npm run browser:scan        # Scan for browser locations
-npm run github:audit        # Audit GitHub OAuth apps & SSH keys
+npm run github:audit      # Run GitHub security audit
+npm run browser:import    # Import browser passwords (TUI)
+npm run browser:scan      # Scan browser locations
 
 # Development
-npm run dev                 # Start all packages in dev mode
-npm run build               # Build all packages
-npm run lint                # Run ESLint
-npm run test                # Run tests
+npm run dev               # Start all packages in dev mode
+npm run build             # Build all packages
 ```
 
 ---
 
-## Contributing
+## Tech Stack
 
-See the [GitHub repository](https://github.com/SoMaCoSF/aegis) for:
-
-- 🐛 Bug reports
-- 💡 Feature requests
-- 🔀 Pull requests
-- 💬 Discussions
-
----
-
-## License
-
-MIT License - see [LICENSE](https://github.com/SoMaCoSF/aegis/blob/main/LICENSE)
+| Layer | Technology |
+|-------|------------|
+| Frontend | React 18, Vite, Tailwind CSS, Three.js |
+| Backend | Express, Prisma, better-sqlite3 |
+| Database | SQLite (3 databases) |
+| Network | Go (DMBT agent), Python (collectors) |
+| Proxy | mitmproxy, Python |
+| Telemetry | OpenTelemetry |
 
 ---
 
-*Built with Claude AI assistance as part of the SoMaCoSF privacy toolkit ecosystem.*
+## Version History
 
-**🔐 AEGIS - Because your digital life shouldn't be a mystery.**
+- **v1.0.0** (2025-12-09): Full DMBT + Ghost_Shell integration, 15 pages, unified API, 50+ endpoints
+- **v0.2.0** (2025-12-08): Added 6 new pages, knowledge graph
+- **v0.1.0** (2025-01-15): Initial scaffold
+
+---
+
+## Future Roadmap
+
+- [ ] CopyParty file sharing integration
+- [ ] VoidTools Everything (es.exe) for fast file search
+- [ ] Claude Agent SDK for autonomous privacy tasks
+- [ ] HaveIBeenPwned breach monitoring
+- [ ] Gmail/ProtonMail subscription discovery
+
+---
+
+## Links
+
+- **GitHub**: [github.com/SoMaCoSF/aegis](https://github.com/SoMaCoSF/aegis)
+- **Issues**: [Report bugs](https://github.com/SoMaCoSF/aegis/issues)
+
+---
+
+*AEGIS Privacy Suite v1.0.0 - Because your digital life shouldn't be a mystery.*
+
+Built with Claude Code 🤖
