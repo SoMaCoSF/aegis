@@ -2,9 +2,35 @@
 
 > **Account & Enterprise Guardian Intelligence System**
 >
-> Complete Digital Footprint Management with DMBT + Ghost_Shell Integration
+> Your Digital Footprint, Finally Visible
 
 **GitHub Repository**: [github.com/SoMaCoSF/aegis](https://github.com/SoMaCoSF/aegis)
+
+---
+
+## What is AEGIS?
+
+Ever wonder how many accounts you've created over the years? Which ones have 2FA? How much you're spending on subscriptions?
+
+**AEGIS is a local-first privacy dashboard that:**
+
+- 📊 **Imports accounts** from Chrome/Firefox/Brave/password managers (never stores passwords - only metadata)
+- 💳 **Tracks subscriptions** and monthly costs across all your services
+- 🐙 **Audits GitHub** OAuth apps, SSH keys, and deploy keys for suspicious access
+- 🛡️ **Blocks trackers** at the network layer (entire ASNs, not just domains)
+- 🧠 **Visualizes** your digital footprint in an interactive 3D knowledge graph
+- 🔐 **Encrypted sync** for multi-machine setups (AES-256-GCM)
+
+**All data stays local. No cloud. No telemetry.**
+
+### Why Contribute?
+
+AEGIS is MIT licensed and built for privacy-conscious developers who want:
+- Full visibility into their digital footprint
+- Network-level blocking (block Meta, Google, or any company at the IP prefix level)
+- A foundation for building privacy automation tools
+
+**Looking for contributors interested in:** React/TypeScript, privacy tooling, network security (ASN/BGP), browser extensions, Python (mitmproxy), Go.
 
 ---
 
