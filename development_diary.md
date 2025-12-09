@@ -487,3 +487,210 @@ npm run build
 ---
 
 *Last updated: 2025-12-08*
+
+---
+
+## Session: 2025-12-09 - Tauri Desktop App & Dual Repo Setup
+
+### Agent: Claude (Opus 4.5)
+### Duration: Continued session
+
+---
+
+## Summary
+
+This session focused on:
+1. Sanity checking v1.0.0 features (fixing missing `better-sqlite3`)
+2. Creating Tauri desktop app scaffold
+3. Setting up public/private dual repository structure
+4. Creating network share setup scripts for multi-machine access
+
+---
+
+## Tasks Completed
+
+### 1. Fixed Dashboard Startup Issue
+
+**Problem**: Dashboard API server crashed with `ERR_MODULE_NOT_FOUND: better-sqlite3`
+
+**Fix**:
+```powershell
+cd packages/dashboard
+npm install better-sqlite3 @types/better-sqlite3 --save
+```
+
+**Verified API Endpoints**:
+| Endpoint | Status | Data |
+|----------|--------|------|
+| `/api/health` | OK | {"status":"ok"} |
+| `/api/status` | OK | Full system status |
+| `/api/dmbt/stats` | OK | 17 domains, 38 IPs, 5 ASNs, 25,242 prefixes |
+| `/api/ghost/stats` | OK | Connected, 0 requests |
+
+### 2. Created Tauri Desktop App Scaffold
+
+**Location**: `packages/desktop/`
+
+**Files Created**:
+| File | Purpose |
+|------|---------|
+| `package.json` | npm config with Tauri CLI |
+| `src-tauri/Cargo.toml` | Rust dependencies |
+| `src-tauri/tauri.conf.json` | Window config, CSP, bundler |
+| `src-tauri/src/main.rs` | Rust entry with system tray |
+| `src-tauri/build.rs` | Build script |
+| `src-tauri/capabilities/default.json` | Permissions |
+| `build-aegis-desktop.ps1` | Build/launch script with validation |
+| `README.md` | Setup instructions |
+
+**Key Features**:
+- System tray with minimize-to-tray
+- Tauri commands for API health check and status
+- NSIS + MSI installer configuration
+- CSP allowing localhost:4242 and :4243
+
+**Build Script Features** (`build-aegis-desktop.ps1`):
+- Prerequisites check (Node 20+, Rust 1.70+, WebView2)
+- Modes: `-Dev`, `-Build`, `-Install`, `-Launch`, `-Clean`
+- Verbose logging to `logs/desktop-build-*.log`
+- ASCII banners and progress indicators
+- Guided installation instructions when prerequisites missing
+
+### 3. Public/Private Dual Repo Setup
+
+**Problem**: Network setup scripts contained sensitive IPs and hostnames
+
+**Solution**: Created two-repo structure
+
+| Repository | Visibility | Contents |
+|------------|------------|----------|
+| `aegis` | PUBLIC | Dashboard, core features, shareable tools |
+| `aegis-internal` | PRIVATE | Network scripts, IPs, machine configs |
+
+**aegis-internal Created** (`D:\somacosf\aegis-internal/`):
+```
+aegis-internal/
+├── scripts/
+│   └── setup-omen02-shares.ps1
+├── configs/
+│   └── machines.json
+└── README.md
+```
+
+**Public .gitignore Updated**:
+```gitignore
+# Local network/machine-specific scripts
+setup-*-shares.ps1
+*-network-setup.ps1
+scripts/setup-*.ps1
+```
+
+### 4. Network Share Setup Script
+
+**File**: `aegis-internal/scripts/setup-omen02-shares.ps1`
+
+**Features**:
+- Creates SMB shares for C: and D: drives on Omen-02
+- Administrator validation
+- Modes: default (setup), `-Status`, `-ReadOnly`, `-RemoveShares`
+- Firewall rule for SMB (port 445)
+- Access from entire subnet (192.168.1.0/24)
+
+### 5. Updated Public Gist
+
+**File**: `docs/AEGIS-GIST.md`
+
+Added sections:
+- "What is AEGIS?" intro explaining the problem it solves
+- "Why Contribute?" with contributor types needed
+- Forum posting templates (short, medium, Twitter)
+
+### 6. Documentation
+
+**Created**: `RESTART-INSTRUCTIONS.md`
+
+Contains:
+- Prerequisites checklist
+- Quick start commands after terminal restart
+- Project structure reference
+- API endpoint reference
+- Database locations
+- Verification commands
+
+---
+
+## Decisions Made
+
+1. **Tauri over Electron**: ~10MB vs ~100MB, native Rust backend, better performance
+2. **Dual Repo**: Keep internal network tools private, share everything else
+3. **Rust PATH Issue**: Requires terminal restart after installation (can't be fixed programmatically)
+
+---
+
+## Issues Encountered & Resolutions
+
+### Issue 1: better-sqlite3 Not Installed
+**Error**: `ERR_MODULE_NOT_FOUND` on dashboard startup
+**Fix**: `npm install better-sqlite3 @types/better-sqlite3 --save`
+
+### Issue 2: Rust Not in PATH
+**Error**: `rustc : The term 'rustc' is not recognized`
+**Fix**: User needs to restart terminal after Rust installation
+
+### Issue 3: Sensitive Info in Public Repo
+**Error**: Network scripts with IPs committed to public repo
+**Fix**: `git rm --cached`, added to .gitignore, moved to private repo
+
+---
+
+## Files Created This Session
+
+| File | Location | Purpose |
+|------|----------|---------|
+| `package.json` | `packages/desktop/` | Tauri npm config |
+| `Cargo.toml` | `packages/desktop/src-tauri/` | Rust dependencies |
+| `tauri.conf.json` | `packages/desktop/src-tauri/` | Tauri configuration |
+| `main.rs` | `packages/desktop/src-tauri/src/` | Rust entry point |
+| `build.rs` | `packages/desktop/src-tauri/` | Rust build script |
+| `default.json` | `packages/desktop/src-tauri/capabilities/` | Permissions |
+| `build-aegis-desktop.ps1` | `packages/desktop/` | Build/launch script |
+| `README.md` | `packages/desktop/` | Desktop setup docs |
+| `RESTART-INSTRUCTIONS.md` | `aegis/` | Post-restart guide |
+| `setup-omen02-shares.ps1` | `aegis-internal/scripts/` | Network shares |
+| `machines.json` | `aegis-internal/configs/` | Machine inventory |
+| `README.md` | `aegis-internal/` | Private repo docs |
+
+---
+
+## Current State
+
+### Running Services
+- **Dashboard Frontend**: http://localhost:4242 (Vite)
+- **API Server**: http://localhost:4243 (Express)
+
+### Connected Databases
+- **AEGIS**: `database/data/aegis.db`
+- **DMBT**: `DMBT/DMBT_Agent/data/dmbt.db` (17 domains, 38 IPs, 5 ASNs)
+- **Ghost_Shell**: `Ghost_Shell/data/ghost_shell.db`
+
+### Pending (Needs Terminal Restart)
+- Tauri desktop app (Rust not in PATH)
+
+---
+
+## Next Steps After Restart
+
+1. Open NEW terminal (to get Rust in PATH)
+2. Verify: `rustc --version`
+3. Start dashboard: `npm run dashboard`
+4. Launch Tauri: `cd packages/desktop && npm run dev`
+
+Or use build script:
+```powershell
+cd D:\somacosf\aegis\packages\desktop
+.\build-aegis-desktop.ps1 -Dev
+```
+
+---
+
+*Last updated: 2025-12-09*
