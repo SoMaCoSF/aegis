@@ -8,7 +8,12 @@ import {
   Settings,
   RefreshCw,
   Network,
-  Sparkles
+  Sparkles,
+  Brain,
+  Cpu,
+  Search,
+  DollarSign,
+  Cloud
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -20,6 +25,12 @@ const navItems = [
   { to: '/privacy', icon: Shield, label: 'Privacy' },
   { to: '/network', icon: Network, label: 'Network' },
   { to: '/assistant', icon: Sparkles, label: 'Assistant' },
+  { to: '/graph', icon: Brain, label: 'Knowledge Graph' },
+  { to: '/ai', icon: Cpu, label: 'AI Tracker' },
+  { to: '/discovery', icon: Search, label: 'Discovery' },
+  { to: '/social', icon: Users, label: 'Social' },
+  { to: '/finance', icon: DollarSign, label: 'Finance' },
+  { to: '/cloud', icon: Cloud, label: 'Cloud Storage' },
 ]
 
 export default function Layout() {

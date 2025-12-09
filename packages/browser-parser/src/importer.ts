@@ -1,13 +1,13 @@
 // ==============================================================================
-// file_id: SOM-SCR-0011-v0.1.0
+// file_id: SOM-SCR-0011-v0.2.0
 // name: importer.ts
 // description: Browser password CSV importer with TUI for finding browser data
 // project_id: AEGIS
 // category: script
-// tags: [browser, csv, importer, passwords, tui]
+// tags: [browser, csv, importer, passwords, tui, logging]
 // created: 2024-01-15
-// modified: 2024-01-15
-// version: 0.1.0
+// modified: 2025-12-08
+// version: 0.2.0
 // agent_id: AGENT-PRIME-001
 // execution: npx tsx src/importer.ts
 // ==============================================================================
@@ -18,8 +18,17 @@ import { join, basename } from 'path'
 import { createHash, createCipheriv, createDecipheriv, randomBytes, scryptSync } from 'crypto'
 import { homedir } from 'os'
 import { PrismaClient } from '@prisma/client'
+import { createLogger, LogLevel } from '@aegis/core'
+
+// Initialize logger
+const logger = createLogger('BrowserImporter', {
+  logDir: join(process.cwd(), '..', '..', 'logs'),
+  level: process.env.LOG_LEVEL === 'debug' ? LogLevel.DEBUG : LogLevel.INFO,
+})
 
 const prisma = new PrismaClient()
+
+logger.info('Browser Importer initialized')
 
 // Browser profile locations (Windows)
 const BROWSER_PATHS: Record<string, string[]> = {
@@ -111,14 +120,17 @@ class BrowserFinderTUI {
 
   async scanForBrowsers(): Promise<BrowserLocation[]> {
     console.log('\n🔍 Scanning for installed browsers...\n')
+    logger.info('Starting browser scan')
     this.foundBrowsers = []
 
     for (const [browser, paths] of Object.entries(BROWSER_PATHS)) {
       for (const basePath of paths) {
+        logger.debug(`Checking browser path: ${basePath}`)
         if (existsSync(basePath)) {
           const profiles = this.findProfiles(basePath, browser)
           if (profiles.length > 0) {
             this.foundBrowsers.push({ browser, path: basePath, profiles })
+            logger.info(`Found browser: ${browser}`, { path: basePath, profiles })
             console.log(`  ✅ ${browser.charAt(0).toUpperCase() + browser.slice(1)}`)
             console.log(`     Path: ${basePath}`)
             console.log(`     Profiles: ${profiles.join(', ')}\n`)
@@ -128,9 +140,11 @@ class BrowserFinderTUI {
     }
 
     if (this.foundBrowsers.length === 0) {
+      logger.warn('No browsers found in standard locations')
       console.log('  ⚠️  No browsers found in standard locations')
     }
 
+    logger.info(`Browser scan complete. Found ${this.foundBrowsers.length} browsers`)
     return this.foundBrowsers
   }
 
@@ -321,9 +335,14 @@ async function importCSVToDatabase(
   browserType: string,
   dryRun: boolean = false
 ): Promise<{ imported: number; skipped: number; errors: string[] }> {
+  logger.info(`Starting CSV import`, { filePath, browserType, dryRun })
+
   const content = readFileSync(filePath, 'utf-8')
   const records = parseCSV(content)
   const mapping = CSV_MAPPINGS[browserType] || CSV_MAPPINGS.chrome
+
+  logger.info(`Parsed ${records.length} records from CSV`)
+  logger.debug(`Using mapping for ${browserType}`, mapping)
 
   let imported = 0
   let skipped = 0
@@ -336,6 +355,7 @@ async function importCSVToDatabase(
 
       if (!url) {
         skipped++
+        logger.debug('Skipping record with no URL')
         continue
       }
 
@@ -354,6 +374,8 @@ async function importCSVToDatabase(
         source: browserType,
       }
 
+      logger.debug(`Processing account: ${domain}`, { username: username || email, category: account.category })
+
       if (dryRun) {
         console.log(`  Would import: ${domain} (${username || email || 'no user'})`)
       } else {
@@ -370,6 +392,7 @@ async function importCSVToDatabase(
 
         if (existing) {
           // Update existing
+          logger.debug(`Updating existing account: ${domain}`, { existingId: existing.id })
           await prisma.account.update({
             where: { id: existing.id },
             data: {
@@ -381,6 +404,7 @@ async function importCSVToDatabase(
           })
         } else {
           // Create new
+          logger.debug(`Creating new account: ${domain}`)
           await prisma.account.create({
             data: {
               domain: account.domain,
@@ -398,10 +422,13 @@ async function importCSVToDatabase(
 
       imported++
     } catch (err) {
-      errors.push(`Row error: ${err}`)
+      const errorMsg = `Row error: ${err}`
+      logger.error(errorMsg)
+      errors.push(errorMsg)
     }
   }
 
+  logger.info(`Import complete`, { imported, skipped, errors: errors.length })
   return { imported, skipped, errors }
 }
 
@@ -447,6 +474,10 @@ function decryptFile(inputPath: string, outputPath: string, password: string): v
 
 // Main TUI loop
 async function main() {
+  logger.info('='.repeat(60))
+  logger.info('AEGIS Browser Importer starting')
+  logger.info('='.repeat(60))
+
   const tui = new BrowserFinderTUI()
 
   try {
@@ -553,6 +584,7 @@ async function main() {
 
         case '7':
           running = false
+          logger.info('User exited the application')
           console.log('\n  👋 Goodbye!\n')
           break
 
@@ -560,10 +592,18 @@ async function main() {
           console.log('\n  ❌ Invalid option')
       }
     }
+  } catch (err) {
+    logger.error('Unexpected error in main loop', err)
+    throw err
   } finally {
+    logger.info('Shutting down')
     tui.close()
     await prisma.$disconnect()
   }
 }
 
-main().catch(console.error)
+main().catch((err) => {
+  logger.error('Fatal error', err)
+  console.error(err)
+  process.exit(1)
+})

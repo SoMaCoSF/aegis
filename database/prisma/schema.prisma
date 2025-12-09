@@ -123,6 +123,131 @@ model SyncLog {
   errors    String?
   startedAt DateTime
   endedAt   DateTime?
-  
+
   @@index([source])
+}
+
+// AI Usage Tracking
+model AIUsage {
+  id          String   @id @default(uuid())
+  provider    String   // claude, openai, gemini, xai
+  model       String?  // opus, sonnet, gpt-4, etc
+  sessionType String   // web, api, cli
+  tokensIn    Int      @default(0)
+  tokensOut   Int      @default(0)
+  costEstimate Float   @default(0)
+  timestamp   DateTime @default(now())
+  metadata    String?  // JSON for extra data
+
+  @@index([provider])
+  @@index([timestamp])
+}
+
+// Browsing History for Account Discovery
+model BrowsingHistory {
+  id          String   @id @default(uuid())
+  domain      String
+  url         String
+  title       String?
+  visitCount  Int      @default(1)
+  lastVisit   DateTime
+  category    String
+  isAccount   Boolean  @default(false)
+  imported    Boolean  @default(false)
+  source      String   // firefox, chrome, etc
+  createdAt   DateTime @default(now())
+
+  @@unique([domain, url])
+  @@index([domain])
+  @@index([category])
+  @@index([isAccount])
+}
+
+// Social Media Accounts
+model SocialAccount {
+  id            String   @id @default(uuid())
+  platform      String   // twitter, reddit, instagram, etc
+  username      String
+  displayName   String?
+  profileUrl    String?
+  followers     Int      @default(0)
+  following     Int      @default(0)
+  postsCount    Int      @default(0)
+  isVerified    Boolean  @default(false)
+  privacyLevel  String   @default("public") // public, private, protected
+  lastChecked   DateTime?
+  linkedEmail   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([platform, username])
+  @@index([platform])
+}
+
+// Cloud Storage Services
+model CloudStorage {
+  id            String   @id @default(uuid())
+  provider      String   // google_drive, dropbox, onedrive, icloud
+  email         String?
+  usedSpace     Float    @default(0) // in GB
+  totalSpace    Float    @default(0) // in GB
+  filesCount    Int      @default(0)
+  sharedCount   Int      @default(0)
+  connectedApps String?  // JSON array
+  lastSynced    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([provider, email])
+  @@index([provider])
+}
+
+// Financial/Trading Accounts
+model FinancialAccount {
+  id            String   @id @default(uuid())
+  provider      String   // alpaca, robinhood, coinbase, bank
+  accountType   String   // trading, checking, savings, crypto
+  nickname      String?
+  lastBalance   Float?
+  currency      String   @default("USD")
+  isActive      Boolean  @default(true)
+  hasAPIAccess  Boolean  @default(false)
+  lastSynced    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([provider])
+  @@index([accountType])
+}
+
+// Knowledge Graph Nodes for visualization
+model KnowledgeNode {
+  id          String   @id @default(uuid())
+  nodeType    String   // account, domain, category, service
+  label       String
+  size        Float    @default(1)
+  color       String?
+  x           Float?
+  y           Float?
+  z           Float?
+  metadata    String?  // JSON
+  createdAt   DateTime @default(now())
+
+  linksFrom   KnowledgeLink[] @relation("FromNode")
+  linksTo     KnowledgeLink[] @relation("ToNode")
+
+  @@index([nodeType])
+}
+
+model KnowledgeLink {
+  id          String   @id @default(uuid())
+  fromNodeId  String
+  toNodeId    String
+  linkType    String   // owns, uses, connects, related
+  strength    Float    @default(1)
+
+  fromNode    KnowledgeNode @relation("FromNode", fields: [fromNodeId], references: [id], onDelete: Cascade)
+  toNode      KnowledgeNode @relation("ToNode", fields: [toNodeId], references: [id], onDelete: Cascade)
+
+  @@unique([fromNodeId, toNodeId, linkType])
 }

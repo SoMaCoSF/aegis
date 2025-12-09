@@ -7,6 +7,12 @@ import GitHub from './pages/GitHub'
 import Privacy from './pages/Privacy'
 import Assistant from './pages/Assistant'
 import Network from './pages/Network'
+import KnowledgeGraph from './pages/KnowledgeGraph'
+import AITracker from './pages/AITracker'
+import Discovery from './pages/Discovery'
+import Social from './pages/Social'
+import Finance from './pages/Finance'
+import CloudStorage from './pages/CloudStorage'
 
 function App() {
   return (
@@ -19,6 +25,12 @@ function App() {
         <Route path="privacy" element={<Privacy />} />
         <Route path="network" element={<Network />} />
         <Route path="assistant" element={<Assistant />} />
+        <Route path="graph" element={<KnowledgeGraph />} />
+        <Route path="ai" element={<AITracker />} />
+        <Route path="discovery" element={<Discovery />} />
+        <Route path="social" element={<Social />} />
+        <Route path="finance" element={<Finance />} />
+        <Route path="cloud" element={<CloudStorage />} />
       </Route>
     </Routes>
   )

@@ -12,14 +12,19 @@
     "start": "node dist/server/index.js"
   },
   "dependencies": {
+    "@aegis/core": "*",
     "@prisma/client": "^5.22.0",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@types/three": "^0.181.0",
     "cors": "^2.8.5",
     "express": "^4.21.0",
+    "lucide-react": "^0.460.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0",
     "recharts": "^2.13.3",
-    "lucide-react": "^0.460.0"
+    "three": "^0.181.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
