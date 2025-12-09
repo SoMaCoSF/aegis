@@ -58,6 +58,12 @@ AEGIS is a **local-first** privacy toolkit that gives you complete visibility an
 | 🌐 **Network Protection** | Block corporate tracking at infrastructure level | ✅ |
 | 🤖 **AI Assistant** | Claude Code integration for live modifications | ✅ |
 | 🔐 **Encrypted Sync** | AES-256-GCM encrypted cloud sync for multi-machine | ✅ |
+| 🧠 **Knowledge Graph** | Three.js 3D visualization of your digital footprint | ✅ |
+| 📊 **AI Usage Tracker** | Monitor Claude, ChatGPT, Perplexity usage and costs | ✅ |
+| 🔍 **Account Discovery** | Discover accounts from browser history | ✅ |
+| 👥 **Social Monitor** | Track social media accounts and privacy settings | ✅ |
+| 💰 **Financial Dashboard** | Trading account overview (Alpaca, Coinbase) | ✅ |
+| ☁️ **Cloud Auditor** | Monitor Google Drive, Dropbox, OneDrive usage | ✅ |
 
 ---
 
@@ -541,6 +547,17 @@ AEGIS integrates with **DMBT** and **Ghost_Shell** for defense-in-depth privacy:
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+### New Pages (v0.2.0)
+
+| Page | Description |
+|------|-------------|
+| **Knowledge Graph** | Interactive 3D visualization using Three.js with OrbitControls, node selection, and dynamic linking |
+| **AI Tracker** | Monitor AI usage across Claude, ChatGPT, Perplexity with token/cost tracking and Recharts visualizations |
+| **Discovery** | Discover accounts from browsing history with category filtering, import functionality |
+| **Social** | Social media account monitor with privacy level tracking, follower stats |
+| **Finance** | Trading account dashboard for Alpaca/Coinbase with portfolio charts, read-only API emphasis |
+| **Cloud Storage** | Audit Google Drive, Dropbox, OneDrive with usage tracking, connected apps, shared files alerts |
 
 ### Network Page
 
