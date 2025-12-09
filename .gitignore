@@ -20,3 +20,15 @@ tmp/
 *.pem
 *.key
 secrets/
+
+# Sensitive data files - NEVER commit these
+*.csv
+*_passwords*
+*_history*
+firefox_*.json
+chrome_*.json
+edge_*.json
+brave_*.json
+*.encrypted
+passwords.txt
+logins.json
