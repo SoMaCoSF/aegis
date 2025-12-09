@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "AEGIS",
+  "version": "1.0.0",
+  "identifier": "com.somacosf.aegis",
+  "build": {
+    "beforeDevCommand": "cd ../dashboard && npm run dev:client",
+    "devUrl": "http://localhost:4242",
+    "beforeBuildCommand": "cd ../dashboard && npm run build",
+    "frontendDist": "../dashboard/dist"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "AEGIS Privacy Suite",
+        "width": 1400,
+        "height": 900,
+        "minWidth": 1024,
+        "minHeight": 768,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true,
+        "decorations": true,
+        "transparent": false
+      }
+    ],
+    "trayIcon": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true,
+      "menuOnLeftClick": false
+    },
+    "security": {
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://localhost:4243 ws://localhost:4242; img-src 'self' data: blob:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["msi", "nsis"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "resources": [],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "",
+      "wix": null,
+      "nsis": {
+        "license": "../../LICENSE",
+        "installerIcon": "icons/icon.ico",
+        "headerImage": null,
+        "sidebarImage": null,
+        "installMode": "currentUser"
+      }
+    },
+    "category": "Utility",
+    "shortDescription": "Privacy Suite for Digital Footprint Management",
+    "longDescription": "AEGIS - Account & Enterprise Guardian Intelligence System. A comprehensive local-first privacy dashboard that tracks your accounts, subscriptions, and blocks corporate trackers at the network level.",
+    "publisher": "SoMaCoSF"
+  },
+  "plugins": {
+    "shell": {
+      "open": true,
+      "scope": [
+        {
+          "name": "open-url",
+          "cmd": "cmd",
+          "args": ["/C", "start", { "validator": "\\S+" }]
+        }
+      ]
+    }
+  }
+}
