@@ -1,6 +1,6 @@
 {
   "name": "aegis",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Account & Enterprise Guardian Intelligence System",
   "workspaces": [
